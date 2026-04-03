@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [form, setForm] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -28,8 +28,8 @@ function Login() {
 
       <form onSubmit={handleSubmit}>
         <input
-          placeholder="Username"
-          onChange={(e) => setForm({ ...form, username: e.target.value })}
+          placeholder="Email"
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
         />
 
         <input

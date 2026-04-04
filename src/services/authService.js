@@ -5,3 +5,7 @@ export const login = async (data) => {
   localStorage.setItem("token", res.data.token);
   return res.data;
 };
+
+export const logout = () => {
+  localStorage.removeItem("token");
+};

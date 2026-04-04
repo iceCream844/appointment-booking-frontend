@@ -10,6 +10,7 @@ function Dashboard() {
   const navigate = useNavigate();
   const [editingId, setEditingId] = useState(null);
   const [newStatus, setNewStatus] = useState("");
+  const [newTime, setNewTime] = useState("");
 
   const handleLogout = () => {
     logout();
@@ -29,14 +30,15 @@ function Dashboard() {
     try {
       await API.put(`/appointments/${id}`, {
         status: newStatus,
-        // keep existing time (important)
-        appointmentTime: appointments.find((a) => a.id === id).appointmentTime,
+        appointmentTime: newTime,
       });
 
       // update UI
       setAppointments((prev) =>
         prev.map((appt) =>
-          appt.id === id ? { ...appt, status: newStatus } : appt,
+          appt.id === id
+            ? { ...appt, status: newStatus, appointmentTime: newTime }
+            : appt,
         ),
       );
 
@@ -52,6 +54,8 @@ function Dashboard() {
     CANCELLED: { color: "red" },
     COMPLETED: { color: "blue" },
   };
+
+  const formatForInput = (dateStr) => dateStr.slice(0, 16);
 
   useEffect(() => {
     if (!isTokenValid()) {
@@ -112,6 +116,7 @@ function Dashboard() {
                 onClick={() => {
                   setEditingId(appt.id);
                   setNewStatus(appt.status);
+                  setNewTime(formatForInput(appt.appointmentTime));
                 }}
               >
                 Edit
@@ -128,6 +133,12 @@ function Dashboard() {
                     <option value="CANCELLED">CANCELLED</option>
                     <option value="COMPLETED">COMPLETED</option>
                   </select>
+
+                  <input
+                    type="datetime-local"
+                    value={newTime}
+                    onChange={(e) => setNewTime(e.target.value)}
+                  />
 
                   <button onClick={() => handleUpdate(appt.id)}>Save</button>
                 </>

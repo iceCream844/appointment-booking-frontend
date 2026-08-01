@@ -1,0 +1,66 @@
+/* ===========================
+   Global Reset
+=========================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ===========================
+   Root Variables
+=========================== */
+
+:root {
+  font-family: "Segoe UI", Arial, sans-serif;
+
+  color: #1f2937;
+
+  background: #f4f6f9;
+
+  line-height: 1.5;
+
+  font-weight: 400;
+
+  text-rendering: optimizeLegibility;
+
+  -webkit-font-smoothing: antialiased;
+
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===========================
+   Body
+=========================== */
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+body {
+  background: #f4f6f9;
+}
+
+/* ===========================
+   Links
+=========================== */
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ===========================
+   Buttons
+=========================== */
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}

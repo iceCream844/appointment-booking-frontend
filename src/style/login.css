@@ -1,0 +1,176 @@
+:root {
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --background: #f4f6f9;
+  --text: #1f2937;
+  --subtext: #6b7280;
+  --border: #d1d5db;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background);
+  font-family: "Segoe UI", sans-serif;
+}
+
+.login-page {
+  min-height: 100vh;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  padding: 30px;
+}
+
+.login-card {
+  width: 420px;
+
+  background: white;
+
+  padding: 40px;
+
+  border-radius: 16px;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.login-card h1 {
+  text-align: center;
+
+  margin-bottom: 10px;
+
+  color: var(--text);
+}
+
+.subtitle {
+  text-align: center;
+
+  font-size: 22px;
+
+  font-weight: 600;
+}
+
+.description {
+  text-align: center;
+
+  color: var(--subtext);
+
+  margin: 10px 0 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+
+  padding: 12px;
+
+  border-radius: 8px;
+
+  border: 1px solid var(--border);
+
+  font-size: 15px;
+
+  transition: 0.2s;
+}
+
+.form-group input:focus {
+  outline: none;
+
+  border-color: var(--primary);
+}
+
+.login-btn {
+  width: 100%;
+
+  margin-top: 10px;
+
+  padding: 14px;
+
+  background: var(--primary);
+
+  color: white;
+
+  border: none;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  transition: 0.2s;
+}
+
+.login-btn:hover {
+  background: var(--primary-hover);
+}
+
+.login-btn:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+.error-message {
+  background: #fee2e2;
+
+  color: #dc2626;
+
+  border: 1px solid #fecaca;
+
+  padding: 12px;
+
+  border-radius: 8px;
+
+  margin-bottom: 20px;
+
+  text-align: center;
+}
+
+/* ===========================
+   Nav User
+=========================== */
+.register-section {
+  margin-top: 25px;
+
+  text-align: center;
+}
+
+.register-section p {
+  color: #6b7280;
+
+  margin-bottom: 10px;
+}
+
+.register-link {
+  color: #2563eb;
+
+  font-weight: 600;
+
+  text-decoration: none;
+}
+
+.register-link:hover {
+  text-decoration: underline;
+}

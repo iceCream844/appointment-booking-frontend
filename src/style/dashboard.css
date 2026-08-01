@@ -1,0 +1,441 @@
+/* ===========================
+   Color Theme
+=========================== */
+
+:root {
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-active: #60a5fa;
+
+  --success: #16a34a;
+  --success-hover: #15803d;
+  --success-active: #4ade80;
+
+  --danger: #dc2626;
+  --danger-hover: #b91c1c;
+  --danger-active: #f87171;
+
+  --secondary: #6b7280;
+  --secondary-hover: #4b5563;
+  --secondary-active: #9ca3af;
+
+  --background: #f4f6f9;
+  --card: #ffffff;
+  --border: #e5e7eb;
+  --text: #1f2937;
+  --subtext: #6b7280;
+}
+
+/* ===========================
+   Global
+=========================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background);
+  font-family: "Segoe UI", sans-serif;
+  color: var(--text);
+}
+
+/* ===========================
+   Dashboard
+=========================== */
+
+.dashboard-page {
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+.dashboard-container {
+  max-width: 1100px;
+  margin: auto;
+}
+
+.dashboard-header {
+  margin-bottom: 25px;
+}
+
+.dashboard-header h1 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.dashboard-header p {
+  color: var(--subtext);
+  font-size: 15px;
+}
+
+/* ===========================
+   Navbar
+=========================== */
+
+.navbar {
+  background: white;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 28px 35px;
+
+  margin-bottom: 30px;
+
+  border-radius: 14px;
+
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.navbar-left h2 {
+  margin: 0;
+
+  font-size: 28px;
+
+  color: var(--text);
+
+  font-weight: 700;
+}
+
+.welcome-section {
+  margin-top: 18px;
+}
+
+.welcome-section h3 {
+  margin: 0;
+
+  font-size: 22px;
+
+  color: #111827;
+}
+
+.welcome-section p {
+  margin-top: 10px;
+
+  color: #6b7280;
+
+  font-size: 15px;
+}
+
+.role-badge {
+  display: inline-block;
+
+  margin-top: 10px;
+
+  padding: 6px 14px;
+
+  border-radius: 20px;
+
+  background: #2563eb;
+
+  color: white;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: flex-start;
+}
+
+/* ===========================
+   Nav User
+=========================== */
+.user-info {
+  margin-top: 12px;
+}
+
+.user-info h3 {
+  margin: 0;
+  color: #111827;
+  font-size: 20px;
+}
+
+.user-info p {
+  margin: 4px 0;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.user-info span {
+  color: #6b7280;
+  font-size: 14px;
+}
+/* ===========================
+   Cards
+=========================== */
+
+.card {
+  background: var(--card);
+
+  border-radius: 12px;
+
+  padding: 24px;
+
+  margin-bottom: 25px;
+
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* ===========================
+   Form
+=========================== */
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+input,
+select {
+  width: 100%;
+
+  padding: 12px;
+
+  border-radius: 8px;
+
+  border: 1px solid var(--border);
+
+  margin-bottom: 18px;
+
+  font-size: 15px;
+
+  transition: 0.2s;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ===========================
+   Appointment Table
+=========================== */
+
+.appointment-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.appointment-table thead {
+  background: #f8fafc;
+}
+
+.appointment-table th {
+  padding: 16px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.appointment-table td {
+  padding: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.appointment-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+.table-actions {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.table-actions button {
+  margin-left: 8px;
+}
+
+/* ===========================
+   Status Badge
+=========================== */
+
+.status-badge {
+  padding: 6px 14px;
+  border-radius: 20px;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.status-badge.pending {
+  background: #f39c12;
+}
+
+.status-badge.approved {
+  background: #27ae60;
+}
+
+.status-badge.cancelled {
+  background: #e74c3c;
+}
+
+.status-badge.completed {
+  background: #3498db;
+}
+
+/* ===========================
+   Buttons
+=========================== */
+
+button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+
+  color: white;
+
+  font-weight: 600;
+
+  transition:
+    background 0.2s,
+    transform 0.1s,
+    box-shadow 0.2s;
+}
+
+button:hover {
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+/* Create */
+
+.create-btn {
+  background: var(--primary);
+}
+
+.create-btn:hover {
+  background: var(--primary-hover);
+}
+
+.create-btn:active {
+  background: var(--primary-active);
+}
+
+/* Edit */
+
+.edit-btn {
+  background: var(--success);
+}
+
+.edit-btn:hover {
+  background: var(--success-hover);
+}
+
+.edit-btn:active {
+  background: var(--success-active);
+}
+
+/* Delete */
+
+.delete-btn {
+  background: var(--danger);
+}
+
+.delete-btn:hover {
+  background: var(--danger-hover);
+}
+
+.delete-btn:active {
+  background: var(--danger-active);
+}
+
+/* Logout / Cancel */
+
+.logout-btn,
+.cancel-btn {
+  background: var(--secondary);
+}
+
+.logout-btn:hover,
+.cancel-btn:hover {
+  background: var(--secondary-hover);
+}
+
+.logout-btn:active,
+.cancel-btn:active {
+  background: var(--secondary-active);
+}
+
+/* Save */
+
+.save-btn {
+  background: var(--success);
+}
+
+.save-btn:hover {
+  background: var(--success-hover);
+}
+
+.save-btn:active {
+  background: var(--success-active);
+}
+
+/* ===========================
+   Edit Section
+=========================== */
+
+.edit-row td {
+  background: #f8fafc;
+}
+
+.edit-section {
+  padding: 20px;
+}
+
+.edit-field {
+  margin-bottom: 18px;
+}
+
+.edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media (max-width: 768px) {
+  .dashboard-page {
+    padding: 20px;
+  }
+
+  .navbar {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .appointment-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .appointment-footer {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+}

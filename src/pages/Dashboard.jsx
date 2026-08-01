@@ -1,43 +1,102 @@
 import { useEffect, useState } from "react";
-import API from "../api/axios";
+import { useNavigate } from "react-router-dom";
+import "../style/dashboard.css";
+
+import Navbar from "../components/Navbar";
+import AppointmentForm from "../components/AppointmentForm";
+import AppointmentList from "../components/AppointmentList";
+
 import { isTokenValid } from "../utils/auth";
 import { logout } from "../services/authService";
-import { useNavigate } from "react-router-dom";
+import { getCurrentUser } from "../services/userService";
+
+import {
+  getAppointments,
+  getMyAppointments,
+  createAppointment,
+  updateAppointment,
+  deleteAppointment,
+} from "../services/appointmentService";
 
 function Dashboard() {
+  const navigate = useNavigate();
+
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+
+  const [currentUser, setCurrentUser] = useState(null);
+
   const [editingId, setEditingId] = useState(null);
   const [newStatus, setNewStatus] = useState("");
   const [newTime, setNewTime] = useState("");
+
+  const [form, setForm] = useState({
+    status: "PENDING",
+    appointmentTime: "",
+  });
+
+  const formatForInput = (dateStr) => dateStr.slice(0, 16);
 
   const handleLogout = () => {
     logout();
     navigate("/");
   };
 
-  const handleDelete = async (id) => {
+  const fetchAppointments = async () => {
     try {
-      await API.delete(`/appointments/${id}`);
-      setAppointments((prev) => prev.filter((appt) => appt.id !== id));
+      const userRes = await getCurrentUser();
+      const user = userRes.data;
+
+      setCurrentUser(user);
+
+      let res;
+
+      if (user.role === "ADMIN") {
+        res = await getAppointments();
+        setAppointments(res.data.content);
+      } else {
+        res = await getMyAppointments();
+        setAppointments(res.data);
+      }
     } catch (err) {
-      console.error("Delete error:", err);
+      console.error("Fetch appointments error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCreate = async (e) => {
+    e.preventDefault();
+
+    try {
+      await createAppointment(form);
+
+      await fetchAppointments();
+
+      setForm({
+        status: "PENDING",
+        appointmentTime: "",
+      });
+    } catch (err) {
+      console.error("Create error:", err);
     }
   };
 
   const handleUpdate = async (id) => {
     try {
-      await API.put(`/appointments/${id}`, {
+      await updateAppointment(id, {
         status: newStatus,
         appointmentTime: newTime,
       });
 
-      // update UI
       setAppointments((prev) =>
         prev.map((appt) =>
           appt.id === id
-            ? { ...appt, status: newStatus, appointmentTime: newTime }
+            ? {
+                ...appt,
+                status: newStatus,
+                appointmentTime: newTime,
+              }
             : appt,
         ),
       );
@@ -48,105 +107,59 @@ function Dashboard() {
     }
   };
 
-  const statusStyle = {
-    PENDING: { color: "orange" },
-    APPROVED: { color: "green" },
-    CANCELLED: { color: "red" },
-    COMPLETED: { color: "blue" },
-  };
+  const handleDelete = async (id) => {
+    try {
+      await deleteAppointment(id);
 
-  const formatForInput = (dateStr) => dateStr.slice(0, 16);
+      setAppointments((prev) => prev.filter((appt) => appt.id !== id));
+    } catch (err) {
+      console.error("Delete error:", err);
+    }
+  };
 
   useEffect(() => {
     if (!isTokenValid()) {
-      console.log("Token expired or missing");
-      localStorage.removeItem("token");
-      setLoading(false);
+      logout();
+      navigate("/");
       return;
     }
 
-    const fetchAppointments = async () => {
-      try {
-        // get current user
-        const userRes = await API.get("/users/me");
-        const user = userRes.data;
-
-        let res;
-
-        if (user.role === "ADMIN") {
-          res = await API.get("/appointments");
-          setAppointments(res.data.content);
-        } else {
-          res = await API.get("/appointments/my");
-          setAppointments(res.data);
-        }
-      } catch (err) {
-        console.error("Error fetching appointments:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchAppointments();
-  }, []);
+  }, [navigate]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
-    <div>
-      <h2>Dashboard</h2>
-      <button onClick={handleLogout}>Logout</button>
+    <div className="dashboard-page">
+      <div className="dashboard-container">
+        <Navbar currentUser={currentUser} onLogout={handleLogout} />
 
-      {appointments.length === 0 ? (
-        <p>No appointments found</p>
-      ) : (
-        <ul>
-          {appointments.map((appt) => (
-            <li key={appt.id}>
-              <strong>
-                <span style={statusStyle[appt.status]}>{appt.status}</span>
-              </strong>
-              <br />
-              {new Date(appt.appointmentTime).toLocaleString()}
-              <br />
+        <div className="dashboard-header">
+          <h1>Appointment Booking System</h1>
+          <p>Manage your appointments quickly and easily.</p>
+        </div>
 
-              <button onClick={() => handleDelete(appt.id)}>Delete</button>
+        <AppointmentForm
+          form={form}
+          setForm={setForm}
+          handleCreate={handleCreate}
+        />
 
-              <button
-                onClick={() => {
-                  setEditingId(appt.id);
-                  setNewStatus(appt.status);
-                  setNewTime(formatForInput(appt.appointmentTime));
-                }}
-              >
-                Edit
-              </button>
-
-              {Number(editingId) === Number(appt.id) && (
-                <>
-                  <select
-                    value={newStatus}
-                    onChange={(e) => setNewStatus(e.target.value)}
-                  >
-                    <option value="PENDING">PENDING</option>
-                    <option value="APPROVED">APPROVED</option>
-                    <option value="CANCELLED">CANCELLED</option>
-                    <option value="COMPLETED">COMPLETED</option>
-                  </select>
-
-                  <input
-                    type="datetime-local"
-                    value={newTime}
-                    onChange={(e) => setNewTime(e.target.value)}
-                  />
-
-                  <button onClick={() => handleUpdate(appt.id)}>Save</button>
-                </>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
+        <AppointmentList
+          appointments={appointments}
+          editingId={editingId}
+          newStatus={newStatus}
+          newTime={newTime}
+          setEditingId={setEditingId}
+          setNewStatus={setNewStatus}
+          setNewTime={setNewTime}
+          formatForInput={formatForInput}
+          handleUpdate={handleUpdate}
+          handleDelete={handleDelete}
+        />
+      </div>
     </div>
   );
 }

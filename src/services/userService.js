@@ -18,3 +18,7 @@ export const getDashboardAppointments = async (role) => {
 
   return getMyAppointments();
 };
+
+export const updateUser = (id, data) => API.put(`/users/${id}`, data);
+
+export const deleteUser = (id) => API.delete(`/users/${id}`);
